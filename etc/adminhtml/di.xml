@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Aitoc Team
+ *
+ * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <type name="Aitoc\GoogleReviews\Model\Config\CustomDeliveryTime">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="helper" xsi:type="object">Aitoc\GoogleReviews\Helper\CustomDeliveryTime</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

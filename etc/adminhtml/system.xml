@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Aitoc Team
+ *
+ * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="aitoc_google_reviews" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Google Customer Reviews</label>
+            <tab>aitoc_extensions</tab>
+            <resource>Aitoc_GoogleReviews::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>General Settings</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label><![CDATA[<span style="color:#e44">Enable Google Customer Reviews</span>]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="merchant_id" translate="label,comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Merchant ID</label>
+                    <comment>From Google Merchant Center.</comment>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                </field>
+                <field id="delivery_time" translate="label,comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Default Estimated Delivery Time</label>
+                    <comment>In days.</comment>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="custom_time" translate="label,comment" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Custom Delivery Time Rules</label>
+                    <frontend_model>Aitoc\GoogleReviews\Block\Adminhtml\Form\Field\CustomDeliveryTime</frontend_model>
+                    <backend_model>Aitoc\GoogleReviews\Model\Config\CustomDeliveryTime</backend_model>
+                    <comment>Specific carrier values have higher priority than defaults</comment>
+                </field>
+            </group>
+            <group id="survey" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Survey Settings</label>
+                <field id="all_customers" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Offer to all customer groups</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="customer_groups" translate="label,comment" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Customer groups offered to take a survey</label>
+                    <source_model>\Magento\Customer\Model\ResourceModel\Group\Collection</source_model>
+                    <comment>A survey offering will be disabled if no group is selected.</comment>
+                    <can_be_empty>1</can_be_empty>
+                    <depends>
+                        <field id="all_customers">0</field>
+                    </depends>
+                </field>
+                <field id="style" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Survey Style</label>
+                    <source_model>Aitoc\GoogleReviews\Model\Source\SurveyStyle</source_model>
+                </field>
+                <field id="language" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Survey Language</label>
+                    <source_model>Aitoc\GoogleReviews\Model\Source\Language</source_model>
+                </field>
+            </group>
+            <group id="badge" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Badge Settings</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable Badge</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="position" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Badge Position</label>
+                    <source_model>Aitoc\GoogleReviews\Model\Source\BadgePosition</source_model>
+                </field>
+                <field id="language" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Badge Language</label>
+                    <source_model>Aitoc\GoogleReviews\Model\Source\Language</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Aitoc Team
+ *
+ * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <default>
+        <aitoc_google_reviews>
+            <general>
+                <enabled>0</enabled>
+                <merchant_id/>
+                <delivery_time>1</delivery_time>
+            </general>
+            <survey>
+                <all_customers>1</all_customers>
+                <customer_groups/>
+                <style>CENTER_DIALOG</style>
+                <language>0</language>
+            </survey>
+            <badge>
+                <enabled>1</enabled>
+                <position>BOTTOM_RIGHT</position>
+                <language>0</language>
+            </badge>
+        </aitoc_google_reviews>
+    </default>
+</config>

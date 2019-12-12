@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Aitoc Team
+ *
+ * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Aitoc_GoogleReviews" setup_version="1.0.0" />
+</config>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Aitoc Team
+ *
+ * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="aitoc_google_reviews_checkout_success"
+                  instance="Aitoc\GoogleReviews\Observer\SetOrderToSurveyObserver"/>
+    </event>
+</config>

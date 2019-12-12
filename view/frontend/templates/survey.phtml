@@ -1,0 +1,35 @@
+<?php
+/**
+ * @author Aitoc Team
+ *
+ * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ */
+
+/**  @var $block Aitoc\GoogleReviews\Block\Survey */
+?>
+
+<script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
+
+<?php if ($block->getLanguage()): ?>
+    <script>
+        window.___gcfg = {
+            lang: "<?php /* @escapeVerified */ echo $block->getLanguage() ?>"
+        };
+    </script>
+<?php endif; ?>
+
+<script>
+    window.renderOptIn = function () {
+        window.gapi.load('surveyoptin', function () {
+            window.gapi.surveyoptin.render(
+                {
+                    "merchant_id": "<?php /* @escapeVerified */ echo  $block->getSurveyData('merchant_id') ?>",
+                    "order_id": "<?php /* @escapeVerified */ echo $block->getSurveyData('order_id') ?>",
+                    "email": "<?php /* @escapeVerified */ echo $block->getSurveyData('email') ?>",
+                    "delivery_country": "<?php /* @escapeVerified */ echo $block->getSurveyData('delivery_country') ?>",
+                    "estimated_delivery_date": "<?php /* @escapeVerified */ echo $block->getSurveyData('estimated_delivery_date') ?>",
+                    "opt_in_style": "<?php /* @escapeVerified */ echo $block->getSurveyData('opt_in_style') ?>"
+                });
+        });
+    };
+</script>
