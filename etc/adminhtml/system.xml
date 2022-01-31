@@ -8,6 +8,9 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
+        <tab id="aitoc_extensions" translate="label" sortOrder="500">
+            <label>Aitoc Extensions</label>
+        </tab>
         <section id="aitoc_google_reviews" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>Google Customer Reviews</label>
             <tab>aitoc_extensions</tab>
