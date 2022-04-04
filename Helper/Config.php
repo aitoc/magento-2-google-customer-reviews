@@ -10,7 +10,7 @@ namespace Aitoc\GoogleReviews\Helper;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Store\Model\ScopeInterface;
-use Aitoc\GoogleReviews\Helper\CustomDeliveryTime\Proxy as CustomTimeHelperProxy;
+use Aitoc\GoogleReviews\Helper\CustomDeliveryTime;
 
 class Config extends AbstractHelper
 {
@@ -27,15 +27,17 @@ class Config extends AbstractHelper
     const BADGE_POSITION_PATH = 'aitoc_google_reviews/badge/position';
     const BADGE_LANGUAGE_PATH = 'aitoc_google_reviews/badge/language';
 
-    /** @var  CustomTimeHelperProxy|null */
+    /**
+     * @var CustomDeliveryTime
+     */
     private  $customTimeHelper;
 
    public function __construct(
        Context $context,
-       CustomTimeHelperProxy $customTimeHelperProxy
+       CustomDeliveryTime $CustomDeliveryTime
    ) {
        parent::__construct($context);
-       $this->customTimeHelper = $customTimeHelperProxy;
+       $this->customTimeHelper = $CustomDeliveryTime;
    }
 
     /**
