@@ -1,18 +1,12 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ *  Copyright © Aitoc. All rights reserved.
  */
 
 namespace Aitoc\GoogleReviews\Block\Adminhtml\Form\Field;
 
 use Aitoc\GoogleReviews\Helper\CustomDeliveryTime as Helper;
 
-/**
- * @method setName(string $value)
- * @method string getName()
- */
 class Carriers extends \Magento\Framework\View\Element\Html\Select
 {
     /** @var array */
@@ -38,8 +32,9 @@ class Carriers extends \Magento\Framework\View\Element\Html\Select
             $carriers = $this->shippingMethodConfig->getActiveCarriers();
             foreach ($carriers as $carrierCode => $carrier) {
                 if ($methods = $carrier->getAllowedMethods()) {
-                    if (!$carrierTitle = $this->_scopeConfig->getValue("carriers/$carrierCode/title", 'store'))
+                    if (!$carrierTitle = $this->_scopeConfig->getValue("carriers/$carrierCode/title", 'store')) {
                         $carrierTitle = __($carrierCode);
+                    }
                     foreach ($methods as $methodCode => $methodTitle) {
                         $value = $carrierCode . '_' . $methodCode;
                         $this->carriers[$value] = $carrierTitle . ' — ' . $methodTitle;
@@ -53,7 +48,7 @@ class Carriers extends \Magento\Framework\View\Element\Html\Select
 
     /**
      * @param string $value
-     * @return $this
+     * @return mixed
      */
     public function setInputName($value)
     {
@@ -67,7 +62,7 @@ class Carriers extends \Magento\Framework\View\Element\Html\Select
     {
         if (!$this->getOptions()) {
             foreach ($this->getCarriers() as $value => $title) {
-                $this->addOption($value, addslashes($title));
+                $this->addOption($value, $this->escapeHtml($title));
             }
         }
 

@@ -1,8 +1,6 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ *  Copyright © Aitoc. All rights reserved.
  */
 
 namespace Aitoc\GoogleReviews\Block;
@@ -57,5 +55,4 @@ class Badge extends Template
         $lang = $this->configHelper->getBadgeLanguage();
         return $this->escapeHtml($lang);
     }
-
 }

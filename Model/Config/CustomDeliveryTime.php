@@ -1,17 +1,10 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ *  Copyright © Aitoc. All rights reserved.
  */
 
 namespace Aitoc\GoogleReviews\Model\Config;
 
-/**
- * Backend for serialized array data
- *
- * @method mixed string|array getValue()
- */
 class CustomDeliveryTime extends \Magento\Framework\App\Config\Value
 {
     /** @var \Aitoc\GoogleReviews\Helper\CustomDeliveryTime */
@@ -26,19 +19,19 @@ class CustomDeliveryTime extends \Magento\Framework\App\Config\Value
     /**
      * Process data after load
      *
-     * @return void
+     * @return CustomDeliveryTime|void
      */
     protected function _afterLoad()
     {
         $value = $this->getValue();
         $value = $this->helper->makeArrayFieldValue($value);
-        $this->setValue($value);
+        $this->setValue(json_encode($value));
     }
 
     /**
      * Prepare data before save
      *
-     * @return void
+     * @return CustomDeliveryTime|void
      */
     public function beforeSave()
     {

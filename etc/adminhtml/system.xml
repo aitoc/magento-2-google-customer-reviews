@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 <!--
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ * Copyright © Aitoc. All rights reserved.
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
@@ -33,6 +31,11 @@
                     <frontend_model>Aitoc\GoogleReviews\Block\Adminhtml\Form\Field\CustomDeliveryTime</frontend_model>
                     <backend_model>Aitoc\GoogleReviews\Model\Config\CustomDeliveryTime</backend_model>
                     <comment>Specific carrier values have higher priority than defaults</comment>
+                </field>
+                <field id="gtn_attribute_value" translate="label,comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>GTIN attribute</label>
+                    <source_model>Aitoc\GoogleReviews\Model\Source\ProductAttributesList</source_model>
+                    <comment>Please select the GTIN attribute</comment>
                 </field>
             </group>
             <group id="survey" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">

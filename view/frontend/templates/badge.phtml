@@ -1,18 +1,17 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ *  Copyright © Aitoc. All rights reserved.
  */
 
 /**  @var $block Aitoc\GoogleReviews\Block\Badge */
 ?>
 <script src="https://apis.google.com/js/platform.js?onload=renderBadge" async defer></script>
-
+<?php /* @phpstan-ignore-next-line */ ?>
 <?php if ($block->getLanguage()): ?>
     <script>
         window.___gcfg = {
-            lang: "<?php /* @escapeVerified */ echo $block->getLanguage() ?>"
+            <?php /* @phpstan-ignore-next-line */ ?>
+            lang: "<?= /* @noEscape */ $block->getLanguage() ?>"
         };
     </script>
 <?php endif; ?>
@@ -24,8 +23,10 @@
         window.gapi.load('ratingbadge', function() {
             window.gapi.ratingbadge.render(
                 ratingBadgeContainer, {
-                    "merchant_id": <?php /* @noEscape */ echo $block->getMerchantId() ?>,
-                    "position": "<?php /* @noEscape */ echo $block->getPosition() ?>"
+                    <?php /* @phpstan-ignore-next-line */ ?>
+                    "merchant_id": <?= /* @noEscape */ $block->getMerchantId() ?>,
+                    <?php /* @phpstan-ignore-next-line */ ?>
+                    "position": "<?= /* @noEscape */ $block->getPosition() ?>"
                 });
         });
     }

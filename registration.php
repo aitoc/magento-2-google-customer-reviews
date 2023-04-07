@@ -1,8 +1,6 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ *  Copyright © Aitoc. All rights reserved.
  */
 
 \Magento\Framework\Component\ComponentRegistrar::register(

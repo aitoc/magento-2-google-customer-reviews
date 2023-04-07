@@ -1,8 +1,6 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ *  Copyright © Aitoc. All rights reserved.
  */
 
 namespace Aitoc\GoogleReviews\Block\Adminhtml\Form\Field;
@@ -12,10 +10,8 @@ use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
 
 class CustomDeliveryTime extends AbstractFieldArray
 {
-    /** @var  null|Carriers */
     private $carriersRenderer;
 
-    /** @var  null|Countries */
     private $countriesRenderer;
 
     protected $_template = 'Aitoc_GoogleReviews::system/config/form/field/array.phtml';

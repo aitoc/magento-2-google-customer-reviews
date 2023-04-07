@@ -1,35 +1,66 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ *  Copyright © Aitoc. All rights reserved.
  */
 
 /**  @var $block Aitoc\GoogleReviews\Block\Survey */
 ?>
 
 <script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
-
+<?php /* @phpstan-ignore-next-line */ ?>
 <?php if ($block->getLanguage()): ?>
     <script>
         window.___gcfg = {
-            lang: "<?php /* @escapeVerified */ echo $block->getLanguage() ?>"
+            <?php /* @phpstan-ignore-next-line */ ?>
+            lang: "<?= /* @noEscape */ $block->getLanguage() ?>"
         };
     </script>
 <?php endif; ?>
-
-<script>
-    window.renderOptIn = function () {
-        window.gapi.load('surveyoptin', function () {
-            window.gapi.surveyoptin.render(
-                {
-                    "merchant_id": "<?php /* @escapeVerified */ echo  $block->getSurveyData('merchant_id') ?>",
-                    "order_id": "<?php /* @escapeVerified */ echo $block->getSurveyData('order_id') ?>",
-                    "email": "<?php /* @escapeVerified */ echo $block->getSurveyData('email') ?>",
-                    "delivery_country": "<?php /* @escapeVerified */ echo $block->getSurveyData('delivery_country') ?>",
-                    "estimated_delivery_date": "<?php /* @escapeVerified */ echo $block->getSurveyData('estimated_delivery_date') ?>",
-                    "opt_in_style": "<?php /* @escapeVerified */ echo $block->getSurveyData('opt_in_style') ?>"
-                });
-        });
-    };
-</script>
+<?php /* @phpstan-ignore-next-line */ ?>
+<?php if ($block->getGtinValuesFromKey('gtin')): ?>
+    <script>
+        window.renderOptIn = function () {
+            window.gapi.load('surveyoptin', function () {
+                window.gapi.surveyoptin.render(
+                    {
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "merchant_id": "<?= /* @noEscape */ $block->getSurveyData('merchant_id') ?>",
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "order_id": "<?= /* @noEscape */ $block->getSurveyData('order_id') ?>",
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "email": "<?= /* @noEscape */ $block->getSurveyData('email') ?>",
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "delivery_country": "<?= /* @noEscape */ $block->getSurveyData('delivery_country') ?>",
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "estimated_delivery_date": "<?= /* @noEscape */ $block->getSurveyData('estimated_delivery_date') ?>",
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "opt_in_style": "<?= /* @noEscape */ $block->getSurveyData('opt_in_style') ?>",
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "products": [<?= /* @noEscape */ $block->getGtinValuesFromKey('gtin') ?>]
+                    });
+            });
+        };
+    </script>
+<?php else: ?>
+    <script>
+        window.renderOptIn = function () {
+            window.gapi.load('surveyoptin', function () {
+                window.gapi.surveyoptin.render(
+                    {
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "merchant_id": "<?= /* @noEscape */ $block->getSurveyData('merchant_id') ?>",
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "order_id": "<?= /* @noEscape */ $block->getSurveyData('order_id') ?>",
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "email": "<?= /* @noEscape */ $block->getSurveyData('email') ?>",
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "delivery_country": "<?= /* @noEscape */ $block->getSurveyData('delivery_country') ?>",
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "estimated_delivery_date": "<?= /* @noEscape */ $block->getSurveyData('estimated_delivery_date') ?>",
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        "opt_in_style": "<?= /* @noEscape */ $block->getSurveyData('opt_in_style') ?>"
+                    });
+            });
+        };
+    </script>
+<?php endif; ?>

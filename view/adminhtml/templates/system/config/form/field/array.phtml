@@ -1,43 +1,44 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ * Copyright © Aitoc, Inc. All rights reserved.
  */
-
-// @codingStandardsIgnoreFile
-
 ?>
 
 <?php
+/* @phpstan-ignore-next-line */
 $_htmlId = $block->getHtmlId() ? $block->getHtmlId() : '_' . uniqid();
+/* @phpstan-ignore-next-line */
 $_colspan = $block->isAddAfter() ? 2 : 1;
 ?>
 
-<div class="design_theme_ua_regexp" id="grid<?php /* @escapeNotVerified */ echo $_htmlId; ?>">
+<div class="design_theme_ua_regexp" id="grid<?= /* @noEscape */ $_htmlId; ?>">
     <div class="admin__control-table-wrapper" style="overflow: initial">
-        <table class="admin__control-table" id="<? /* @escapeNotVerified */ echo $block->getElement()->getId() ?>">
+        <?php /* @phpstan-ignore-next-line */ ?>
+        <table class="admin__control-table" id="<?= /* @noEscape */ $block->getElement()->getId() ?>">
             <thead>
             <tr>
+                <?php /* @phpstan-ignore-next-line */ ?>
                 <?php foreach ($block->getColumns() as $columnName => $column): ?>
-                    <th><?php /* @escapeNotVerified */ echo $column['label']; ?></th>
+                    <th><?= /* @noEscape */ $column['label']; ?></th>
                 <?php endforeach;?>
-                <th class="col-actions" colspan="<?php /* @escapeNotVerified */ echo $_colspan; ?>">Action</th>
+                <th class="col-actions" colspan="<?= /* @noEscape */ $_colspan; ?>">Action</th>
             </tr>
             </thead>
             <tfoot>
             <tr>
-                <td colspan="<?php echo count($block->getColumns())+$_colspan; ?>" class="col-actions-add">
-                    <button id="addToEndBtn<?php /* @escapeNotVerified */ echo $_htmlId; ?>" class="action-add" title="<?php /* @escapeNotVerified */ echo __('Add'); ?>" type="button">
-                        <span><?php /* @escapeNotVerified */ echo __('Add Delivery Time Rule'); ?></span>
+                <?php /* @phpstan-ignore-next-line */ ?>
+                <td colspan="<?= count($block->getColumns())+$_colspan; ?>" class="col-actions-add">
+                    <button id="addToEndBtn<?= /* @noEscape */ $_htmlId; ?>" class="action-add" title="<?= /* @noEscape */ __('Add'); ?>" type="button">
+                        <span><?= /* @noEscape */ __('Add Delivery Time Rule'); ?></span>
                     </button>
                 </td>
             </tr>
             </tfoot>
-            <tbody id="addRow<?php /* @escapeNotVerified */ echo $_htmlId; ?>"></tbody>
+            <tbody id="addRow<?= /* @noEscape */ $_htmlId; ?>"></tbody>
         </table>
     </div>
-    <input type="hidden" name="<?php /* @escapeNotVerified */ echo $block->getElement()->getName(); ?>[__empty]" value="" />
+    <?php /* @phpstan-ignore-next-line */ ?>
+    <input type="hidden" name="<?= /* @noEscape */ $block->getElement()->getName(); ?>[__empty]" value="" />
 
     <script>
         require([
@@ -49,24 +50,28 @@ $_colspan = $block->isAddAfter() ? 2 : 1;
         ], function (jQuery, mageTemplate) {
 
             // create row creator
-            window.arrayRow<?php /* @escapeNotVerified */ echo $_htmlId ?> = {
+            window.arrayRow<?= /* @noEscape */ $_htmlId ?> = {
 
                 pleaseSelect: jQuery.mage.__('Select Options'),
 
                 // define row prototypeJS template
                 template: mageTemplate(
+                   <?php // phpcs:ignore ?>
                     '<tr id="<%- _id %>">'
+                    <?php /* @phpstan-ignore-next-line */ ?>
                     <?php foreach ($block->getColumns() as $columnName => $column): ?>
                     + '<td>'
-                    + '<?php /* @escapeNotVerified */ echo $block->renderCellTemplate($columnName)?>'
+                        <?php /* @phpstan-ignore-next-line */ ?>
+                        + '<?= /* @noEscape */ $block->renderCellTemplate($columnName)?>'
                     + '<\/td>'
                     <?php endforeach; ?>
-
+                    <?php /* @phpstan-ignore-next-line */ ?>
                     <?php if ($block->isAddAfter()): ?>
-                    + '<td><button class="action-add" type="button" id="addAfterBtn<%- _id %>"><span><?php /* @escapeNotVerified */ echo __('Add after'); ?><\/span><\/button><\/td>'
+                    <?php // phpcs:ignore ?>
+                    + '<td><button class="action-add" type="button" id="addAfterBtn<%- _id %>"><span><?= /* @noEscape */ __('Add after'); ?><\/span><\/button><\/td>'
                     <?php endif; ?>
-
-                    + '<td class="col-actions"><button onclick="arrayRow<?php /* @escapeNotVerified */ echo $_htmlId ?>.del(\'<%- _id %>\')" class="action-delete" type="button"><span><?php /* @escapeNotVerified */ echo __('Delete'); ?><\/span><\/button><\/td>'
+                    <?php // phpcs:ignore ?>
+                    + '<td class="col-actions"><button onclick="arrayRow<?= /* @noEscape */ $_htmlId ?>.del(\'<%- _id %>\')" class="action-delete" type="button"><span><?= /* @noEscape */ __('Delete'); ?><\/span><\/button><\/td>'
                     +'<\/tr>'
                 ),
 
@@ -80,8 +85,9 @@ $_colspan = $block->isAddAfter() ? 2 : 1;
                     } else {
                         var d = new Date();
                         templateValues = {
+                        <?php /* @phpstan-ignore-next-line */ ?>
                         <?php foreach ($block->getColumns() as $columnName => $column): ?>
-                        <?php /* @escapeNotVerified */ echo $columnName ?>: '',
+                            <?= /* @noEscape */ $columnName ?>: '',
                             'option_extra_attrs': {},
                         <?php endforeach; ?>
                         _id: '_' + d.getTime() + '_' + d.getMilliseconds()
@@ -92,7 +98,7 @@ $_colspan = $block->isAddAfter() ? 2 : 1;
                     if (insertAfterId) {
                         Element.insert($(insertAfterId), {after: this.template(templateValues)});
                     } else {
-                        Element.insert($('addRow<?php /* @escapeNotVerified */ echo $_htmlId ?>'), {bottom: this.template(templateValues)});
+                        Element.insert($('addRow<?= /* @noEscape */ $_htmlId ?>'), {bottom: this.template(templateValues)});
                     }
                     var selects = $$('.admin__control-table select');
 
@@ -116,6 +122,7 @@ $_colspan = $block->isAddAfter() ? 2 : 1;
                     }
 
                     // Add event for {addAfterBtn} button
+                    <?php /* @phpstan-ignore-next-line */ ?>
                     <?php if ($block->isAddAfter()): ?>
                     Event.observe('addAfterBtn' + templateValues._id, 'click', this.add.bind(this, false, templateValues._id));
                     <?php endif; ?>
@@ -127,18 +134,20 @@ $_colspan = $block->isAddAfter() ? 2 : 1;
             }
 
             // bind add action to "Add" button in last row
-            Event.observe('addToEndBtn<?php /* @escapeNotVerified */ echo $_htmlId ?>', 'click', arrayRow<?php /* @escapeNotVerified */ echo $_htmlId ?>.add.bind(arrayRow<?php /* @escapeNotVerified */ echo $_htmlId ?>, false, false));
+            Event.observe('addToEndBtn<?= /* @noEscape */ $_htmlId ?>', 'click', arrayRow<?= /* @noEscape */ $_htmlId ?>.add.bind(arrayRow<?= /* @noEscape */ $_htmlId ?>, false, false));
 
             // add existing rows
             <?php
-            foreach ($block->getArrayRows() as $_rowId => $_row) {
-                /* @escapeNotVerified */ echo "arrayRow{$_htmlId}.add(" . $_row->toJson() . ");\n";
+            /* @phpstan-ignore-next-line */
+            foreach ($block->getArrayRows() as $_rowId => $_row) { ?>
+                <?= /* @noEscape */ "arrayRow{$_htmlId}.add(" . $_row->toJson() . ");\n";
             }
             ?>
 
             // Toggle the grid availability, if element is disabled (depending on scope)
+            <?php /* @phpstan-ignore-next-line */ ?>
             <?php if ($block->getElement()->getDisabled()):?>
-            toggleValueElements({checked: true}, $('grid<?php /* @escapeNotVerified */ echo $_htmlId; ?>').parentNode);
+            toggleValueElements({checked: true}, $('grid<?= /* @noEscape */ $_htmlId; ?>').parentNode);
             <?php endif;?>
         });
     </script>

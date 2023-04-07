@@ -1,17 +1,19 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ *  Copyright © Aitoc. All rights reserved.
  */
 
 namespace Aitoc\GoogleReviews\Block;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Sales\Model\Order;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory as OrderCollectionFactory;
 use Aitoc\GoogleReviews\Helper\Config as ConfigHelper;
+use Magento\Catalog\Model\ProductRepository;
+use Psr\Log\LoggerInterface;
+use Exception;
 
 /**
  * @method setOrderIds(array $orderIds)
@@ -19,7 +21,7 @@ use Aitoc\GoogleReviews\Helper\Config as ConfigHelper;
  */
 class Survey extends Template
 {
-    const SURVEY_DATA_FIELDS_COUNT = 6;
+    protected const SURVEY_DATA_FIELDS_COUNT = 7;
 
     /** @var \Aitoc\GoogleReviews\Helper\Config */
     private $configHelper;
@@ -33,16 +35,39 @@ class Survey extends Template
     /** @var array */
     private $surveyData = [];
 
+    /**
+     * @var ProductRepository
+     */
+    protected $productRepository;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * @param Template\Context $context
+     * @param ConfigHelper $configHelper
+     * @param DateTime $date
+     * @param OrderCollectionFactory $salesOrderCollectionFactory
+     * @param ProductRepository $productRepository
+     * @param LoggerInterface $logger
+     * @param array $data
+     */
     public function __construct(
         Template\Context $context,
         ConfigHelper $configHelper,
         DateTime $date,
         OrderCollectionFactory $salesOrderCollectionFactory,
+        ProductRepository $productRepository,
+        LoggerInterface $logger,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->configHelper = $configHelper;
         $this->salesOrderCollectionFactory = $salesOrderCollectionFactory;
+        $this->productRepository = $productRepository;
+        $this->logger = $logger;
         $this->date = $date;
     }
 
@@ -95,7 +120,7 @@ class Survey extends Template
             /** @var Order $order */
             try {
                 if (!$this->validateCustomerGroup($order->getCustomerGroupId())) {
-                    throw new \Exception('Restricted customer group.');
+                    $this->logger->info('Restricted customer group.');
                 }
 
                 $orderData['email'] = $order->getCustomerEmail();
@@ -112,10 +137,24 @@ class Survey extends Template
 
                 foreach ($orderData as $item) {
                     if (empty($item)) {
-                        throw new \Exception('Invalid value.');
+                        $this->logger->info("Invalid value");
                     }
                 }
-            } catch (\Exception $e) {
+
+                $purchaseItems = $order->getAllVisibleItems();
+                $gtinData = [];
+                if ($purchaseItems) {
+                    foreach ($purchaseItems as $item) {
+                        $product = $this->getProductById($item->getProductId());
+                        $attributes = $product->getAttributes();
+                        if ($attributes) {
+                            $gtinData = $this->getAdminSelectedProductAttributeValue($attributes, $product, $gtinData);
+                        }
+                    }
+                }
+                $orderData['gtin'] = implode(', ', $gtinData);
+            } catch (Exception $e) {
+                $this->logger->info($e->getMessage());
                 $orderData = [];
                 continue;
             }
@@ -135,7 +174,7 @@ class Survey extends Template
     }
 
     /**
-     * @param $groupId
+     * @param int $groupId
      * @return bool
      */
     private function validateCustomerGroup($groupId)
@@ -169,7 +208,7 @@ class Survey extends Template
     }
 
     /**
-     * @param $key
+     * @param string $key
      * @return string
      */
     public function getSurveyData($key)
@@ -184,5 +223,54 @@ class Survey extends Template
     {
         $lang = $this->configHelper->getSurveyLanguage();
         return $this->escapeHtml($lang);
+    }
+
+    /**
+     * Get Product by Product Id
+     *
+     * @param int $id
+     * @return \Magento\Catalog\Api\Data\ProductInterface|mixed|null
+     */
+    public function getProductById($id)
+    {
+        try {
+            return $this->productRepository->getById($id);
+        } catch (NoSuchEntityException $e) {
+            $this->logger->info($id.' Product can not find in the database '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Get Admin Selected GTIN Product Attribute Value
+     *
+     * @param mixed $attributes
+     * @param mixed $product
+     * @param array $gtinValues
+     * @return mixed
+     */
+    public function getAdminSelectedProductAttributeValue($attributes, $product, $gtinValues)
+    {
+        foreach ($attributes as $attribute) {
+            if ($this->configHelper->getGtinAttributeCode()) {
+                if ($attribute->getAttributeCode() == $this->configHelper->getGtinAttributeCode()) {
+                    $attributeValue =  $this->escapeHtml($attribute->getFrontend()->getValue($product));
+                    if ($attributeValue) {
+                        $gtinValues[] = '{"gtin":"'.$attributeValue.'"}';
+                    }
+                }
+            }
+        }
+        return $gtinValues;
+    }
+
+    /**
+     * Get GTIN Array Data by Key
+     *
+     * @param string $key
+     * @return mixed|null
+     */
+    public function getGtinValuesFromKey($key)
+    {
+        return isset($this->surveyData[$key]) ? $this->surveyData[$key] : null;
     }
 }

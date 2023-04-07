@@ -1,5 +1,6 @@
-# Changelog
-All notable changes to this project will be documented in this file.
+## 1.0.5 - 2022-12-12
+### Changed
+- Added configuration field to include GTIN value of product
 
 ## 1.0.4 - 2022-09-23
 ### Changed

@@ -1,8 +1,6 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ *  Copyright © Aitoc. All rights reserved.
  */
 
 namespace Aitoc\GoogleReviews\Helper;
@@ -14,31 +12,32 @@ use Aitoc\GoogleReviews\Helper\CustomDeliveryTime;
 
 class Config extends AbstractHelper
 {
-    const MODULE_ENABLED_PATH = 'aitoc_google_reviews/general/enabled';
-    const MERCHANT_ID_PATH = 'aitoc_google_reviews/general/merchant_id';
-    const DELIVERY_OFFSET_PATH = 'aitoc_google_reviews/general/delivery_time';
+    public const MODULE_ENABLED_PATH = 'aitoc_google_reviews/general/enabled';
+    public const MERCHANT_ID_PATH = 'aitoc_google_reviews/general/merchant_id';
+    public const DELIVERY_OFFSET_PATH = 'aitoc_google_reviews/general/delivery_time';
 
-    const SURVEY_ALL_CUSTOMERS_PATH = 'aitoc_google_reviews/survey/all_customers';
-    const SURVEY_CUSTOMER_GROUPS_PATH = 'aitoc_google_reviews/survey/customer_groups';
-    const SURVEY_LANGUAGE_PATH = 'aitoc_google_reviews/survey/language';
-    const SURVEY_STYLE_PATH = 'aitoc_google_reviews/survey/style';
+    public const SURVEY_ALL_CUSTOMERS_PATH = 'aitoc_google_reviews/survey/all_customers';
+    public const SURVEY_CUSTOMER_GROUPS_PATH = 'aitoc_google_reviews/survey/customer_groups';
+    public const SURVEY_LANGUAGE_PATH = 'aitoc_google_reviews/survey/language';
+    public const SURVEY_STYLE_PATH = 'aitoc_google_reviews/survey/style';
 
-    const BADGE_ENABLED_PATH = 'aitoc_google_reviews/badge/enabled';
-    const BADGE_POSITION_PATH = 'aitoc_google_reviews/badge/position';
-    const BADGE_LANGUAGE_PATH = 'aitoc_google_reviews/badge/language';
+    public const BADGE_ENABLED_PATH = 'aitoc_google_reviews/badge/enabled';
+    public const BADGE_POSITION_PATH = 'aitoc_google_reviews/badge/position';
+    public const BADGE_LANGUAGE_PATH = 'aitoc_google_reviews/badge/language';
+    public const GTIN_ATTRIBUTE_PATH = 'aitoc_google_reviews/general/gtn_attribute_value';
 
     /**
      * @var CustomDeliveryTime
      */
-    private  $customTimeHelper;
+    private $customTimeHelper;
 
-   public function __construct(
-       Context $context,
-       CustomDeliveryTime $CustomDeliveryTime
-   ) {
-       parent::__construct($context);
-       $this->customTimeHelper = $CustomDeliveryTime;
-   }
+    public function __construct(
+        Context $context,
+        CustomDeliveryTime $CustomDeliveryTime
+    ) {
+        parent::__construct($context);
+        $this->customTimeHelper = $CustomDeliveryTime;
+    }
 
     /**
      * @return bool
@@ -93,7 +92,6 @@ class Config extends AbstractHelper
         return $this->scopeConfig->getValue(self::SURVEY_STYLE_PATH, ScopeInterface::SCOPE_STORE);
     }
 
-
     /**
      * @return string
      */
@@ -139,5 +137,13 @@ class Config extends AbstractHelper
             ->getValue(self::DELIVERY_OFFSET_PATH, ScopeInterface::SCOPE_WEBSITES);
     }
 
-
+    /**
+     * Get GTIN Attribute Code Value
+     *
+     * @return mixed
+     */
+    public function getGtinAttributeCode()
+    {
+        return $this->scopeConfig->getValue(self::GTIN_ATTRIBUTE_PATH, ScopeInterface::SCOPE_WEBSITES);
+    }
 }

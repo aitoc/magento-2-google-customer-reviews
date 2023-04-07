@@ -1,8 +1,6 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ *  Copyright © Aitoc. All rights reserved.
  */
 
 namespace Aitoc\GoogleReviews\Block\Adminhtml\Form\Field;
@@ -49,7 +47,7 @@ class Countries extends \Magento\Framework\View\Element\Html\Select
     {
         if (!$this->getOptions()) {
             foreach ($this->getCountries() as $value => $title) {
-                $this->addOption($value, addslashes($title));
+                $this->addOption($value, $this->escapeHtml($title));
             }
         }
         $this->setExtraParams('multiple="multiple" style="width:240px"');

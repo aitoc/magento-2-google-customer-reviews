@@ -1,8 +1,6 @@
 <?php
 /**
- * @author Aitoc Team
- *
- * @copyright Copyright (c) 2019 Aitoc (https://www.aitoc.com)
+ *  Copyright © Aitoc. All rights reserved.
  */
 
 namespace Aitoc\GoogleReviews\Helper;
@@ -14,12 +12,12 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class CustomDeliveryTime
 {
-    const ANY_METHOD = 'any_method';
-    const SHIPPING_METHOD = 'shipping_method';
-    const COUNTRIES = 'countries';
-    const DELIVERY_TIME = 'delivery_time';
+    public const ANY_METHOD = 'any_method';
+    public const SHIPPING_METHOD = 'shipping_method';
+    public const COUNTRIES = 'countries';
+    public const DELIVERY_TIME = 'delivery_time';
 
-    const XML_PATH_CUSTOM_DELIVERY_OFFSET = 'aitoc_google_reviews/general/custom_time';
+    public const XML_PATH_CUSTOM_DELIVERY_OFFSET = 'aitoc_google_reviews/general/custom_time';
 
     /** @var \Magento\Framework\Math\Random */
     private $mathRandom;
@@ -34,7 +32,6 @@ class CustomDeliveryTime
         $this->mathRandom = $mathRandom;
         $this->scopeConfig = $scopeConfig;
     }
-
 
     /**
      * Retrieve fixed offset value.
@@ -58,7 +55,7 @@ class CustomDeliveryTime
         if (is_numeric($value)) {
             $data = (float) $value;
             return (string) $data;
-        } else if (is_array($value)) {
+        } elseif (is_array($value)) {
             $data = [];
             foreach ($value as $shipMethod => $countries) {
                 if (!array_key_exists($shipMethod, $data)) {
